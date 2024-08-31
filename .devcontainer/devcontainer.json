@@ -1,0 +1,13 @@
+{
+    "name": "Image Extraction Service",
+    "build": {
+      "dockerfile": "../Dockerfile.dev",
+      "context": ".."
+    },
+    "forwardPorts": [
+      5000
+    ],
+    "workspaceFolder": "/app",
+    "postCreateCommand": "fastapi run app.py --port 5000"
+  }
+  
