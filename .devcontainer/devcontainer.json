@@ -7,7 +7,10 @@
     "forwardPorts": [
       5000
     ],
+    "mounts": [
+      "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached"
+    ],
     "workspaceFolder": "/app",
-    "postCreateCommand": "fastapi run app.py --port 5000"
+    "postCreateCommand": "fastapi run src/app.py --port 5000"
   }
   
