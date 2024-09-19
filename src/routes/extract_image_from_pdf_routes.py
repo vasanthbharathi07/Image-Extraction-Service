@@ -19,4 +19,7 @@ def extract_image_from_pdf_route(
       )
     
     response = extract_image_from_pdf_service(file,width,height,color)
-    return JSONResponse(content=response)
+    if not response:
+      return JSONResponse(content=f"Could not resolve directory to save the extracted images")
+    else:
+      return JSONResponse(content=response)
