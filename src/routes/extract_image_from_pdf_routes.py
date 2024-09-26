@@ -1,7 +1,7 @@
 from typing import Optional
 from fastapi import APIRouter,File,UploadFile,Form,Query,HTTPException, status
 from services.extract_image_from_pdf_services import extract_image_from_pdf_service
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 
 router = APIRouter()
 
@@ -18,8 +18,16 @@ def extract_image_from_pdf_route(
          detail = 'Only PDF documents are supported'
       )
     
-    response = extract_image_from_pdf_service(file,width,height,color)
-    if not response:
-      return JSONResponse(content=f"Could not resolve directory to save the extracted images")
+    payload = extract_image_from_pdf_service(file,width,height,color)
+    if payload is None:
+      raise HTTPException(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        detail='Error Occurred During Image Extraction'
+    )
     else:
-      return JSONResponse(content=response)
+       response = StreamingResponse(
+        payload,
+        media_type="application/zip",
+        headers={"Content-Disposition": "attachment; filename=download.zip"}
+    )
+    return response
