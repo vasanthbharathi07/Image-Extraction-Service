@@ -11,6 +11,14 @@
       "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached"
     ],
     "workspaceFolder": "/app",
-    "postCreateCommand": "fastapi run src/app.py --port 5000"
+    "postCreateCommand": "fastapi run src/app.py --port 5000",
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "ms-python.python",           // Python extension
+          "ms-python.vscode-pylance"   // Pylance for better Python IntelliSense
+        ]
+      }
+    }
   }
   
