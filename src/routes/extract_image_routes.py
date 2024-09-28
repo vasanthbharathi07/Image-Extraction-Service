@@ -1,24 +1,27 @@
 from typing import Optional
 from fastapi import APIRouter,File,UploadFile,Form,Query,HTTPException, status
-from services.extract_image_from_pdf_services import extract_image_from_pdf_service
+from services.extract_image_services import extract_image_service
 from fastapi.responses import JSONResponse, StreamingResponse
+from constants.constants import VALID_EXTENSION_LIST
+import os
 
 router = APIRouter()
 
-@router.post("/extract_image/pdf")
-def extract_image_from_pdf_route(
+@router.post("/extract_image")
+def extract_image_route(
   file: UploadFile = File(...),
   width: Optional[int] = Form(None),
-  height: Optional[int] = Form(None),
-  color: Optional[str] = Query("black_and_white", enum=["color", "black_and_white"])
+  height: Optional[int] = Form(None)
 ):  
-    if not file.filename.endswith('.pdf'):
+    file_extension = os.path.splitext(file.filename)[1].lower()
+    
+    if file_extension not in VALID_EXTENSION_LIST:
       raise HTTPException(
          status_code = status.HTTP_400_BAD_REQUEST,
-         detail = 'Only PDF documents are supported'
+         detail = f"Only {VALID_EXTENSION_LIST} are supported"
       )
     
-    payload = extract_image_from_pdf_service(file,width,height,color)
+    payload = extract_image_service(file_extension,file,width,height)
     if payload is None:
       raise HTTPException(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,

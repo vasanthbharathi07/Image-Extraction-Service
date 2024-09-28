@@ -7,7 +7,7 @@ import zipfile
 from fastapi.responses import JSONResponse
 import shutil
 
-def extract_images_from_pdf(uploaded_file_artifact:File):
+def extract_images_from_pdf(uploaded_file_artifact:File,width=None,height=None):
     zip_buffer = None
     try:
         file_bytes = uploaded_file_artifact.file.read()
@@ -28,9 +28,15 @@ def extract_images_from_pdf(uploaded_file_artifact:File):
                     # Convert image bytes to a PIL Image object
                     image = Image.open(io.BytesIO(image_bytes))
 
+                    if width is not None or height is not None:
+                        #Resize the image to the desired width and height
+                        resized_image = image.resize((width, height))
+                        image = resized_image
+
                     # Save the image as JPEG
                     image_io = io.BytesIO()
                     image.save(image_io, 'JPEG')
+                    image_io.seek(0)
                     image_name = f'page_{page_number + 1}_image_{image_inx + 1}.jpg'
                     zip_file.writestr(image_name,image_io.read())
 
