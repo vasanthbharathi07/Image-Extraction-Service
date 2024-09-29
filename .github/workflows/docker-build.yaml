@@ -29,10 +29,10 @@ jobs:
        # Run mypy
       - name: Run mypy
         run: |
-          docker run --rm image-extraction-service:${{ github.sha }} run_mypy.sh
+          docker run --rm image-extraction-service:${{ github.sha }} /app/run_mypy.sh
 
       # Run unit tests
       - name: Run unit tests
         run: |
-          docker run --rm image-extraction-service:${{ github.sha }} pytest /tests
+          docker run --rm image-extraction-service:${{ github.sha }} pytest /app/tests
 
