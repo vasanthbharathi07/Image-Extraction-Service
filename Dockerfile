@@ -14,10 +14,12 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
+COPY requirements.dev.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY src/ /app/
+COPY src/ /app/src
+COPY run_mypy.sh /app/
 
 EXPOSE 5000
 
