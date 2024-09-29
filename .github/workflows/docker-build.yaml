@@ -34,5 +34,5 @@ jobs:
       # Run unit tests
       - name: Run unit tests
         run: |
-          docker run --rm image-extraction-service:${{ github.sha }} pytest /app/tests
+          docker run --rm image-extraction-service:${{ github.sha }} pytest --cov=/app/src --cov-report=xml:/app/coverage.xml /app/src/tests
 
