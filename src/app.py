@@ -1,7 +1,7 @@
 from typing import Union
 
 from fastapi import FastAPI
-from routes.extract_image_routes import router as extract_image_route
+from src.routes.extract_image_routes import router as extract_image_route
 
 app = FastAPI()
 
