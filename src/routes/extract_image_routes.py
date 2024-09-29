@@ -1,8 +1,8 @@
 from typing import Optional
 from fastapi import APIRouter,File,UploadFile,Form,Query,HTTPException, status
-from services.extract_image_services import extract_image_service
+from src.services.extract_image_services import extract_image_service
 from fastapi.responses import JSONResponse, StreamingResponse
-from constants.constants import VALID_EXTENSION_LIST
+from src.constants.constants import VALID_EXTENSION_LIST
 import os
 
 router = APIRouter()
@@ -13,7 +13,9 @@ def extract_image_route(
   width: Optional[int] = Form(None),
   height: Optional[int] = Form(None)
 ):  
-    file_extension = os.path.splitext(file.filename)[1].lower()
+    filename = file.filename if file.filename is not None else ""
+    file_extension = os.path.splitext(filename)[1]
+    file_extension = file_extension.lower() if file_extension else ""
     
     if file_extension not in VALID_EXTENSION_LIST:
       raise HTTPException(
