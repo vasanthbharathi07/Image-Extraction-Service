@@ -4,12 +4,13 @@ on:
   push:
     branches:
       - main
+      - develop
   pull_request:
     branches:
       - main
 
 jobs:
-  build:
+  build_type_check_test:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,3 +25,14 @@ jobs:
       # Build the Docker image
       - name: Build Docker image
         run: docker build -t image-extraction-service:${{ github.sha }} .
+      
+       # Run mypy
+      - name: Run mypy
+        run: |
+          docker run --rm image-extraction-service:${{ github.sha }} sh run_mypy.sh
+
+      # Run unit tests
+      - name: Run unit tests
+        run: |
+          docker run --rm image-extraction-service:${{ github.sha }} pytest --cov=/app/src --cov-report=xml:/app/coverage.xml /app/src/tests
+

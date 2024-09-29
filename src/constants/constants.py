@@ -1,0 +1,1 @@
+VALID_EXTENSION_LIST = [".pdf",".docx"]

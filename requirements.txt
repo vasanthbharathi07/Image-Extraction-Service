@@ -2,3 +2,5 @@ fastapi[standard]
 pydantic
 PyMuPDF
 Pillow
+pytest
+pytest-cov
