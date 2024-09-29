@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  build:
+  build_type_check_test:
     runs-on: ubuntu-latest
 
     steps:
