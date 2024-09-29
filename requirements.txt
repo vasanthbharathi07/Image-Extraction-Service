@@ -3,3 +3,4 @@ pydantic
 PyMuPDF
 Pillow
 pytest
+pytest-cov
