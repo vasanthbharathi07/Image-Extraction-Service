@@ -1,5 +1,5 @@
 import fitz
-from fastapi import File, HTTPException
+from fastapi import UploadFile, File, HTTPException
 from PIL import Image
 import os
 import io
@@ -7,7 +7,7 @@ import zipfile
 from fastapi.responses import JSONResponse
 import shutil
 
-def extract_images_from_pdf(uploaded_file_artifact:File,width=None,height=None):
+def extract_images_from_pdf(uploaded_file_artifact: UploadFile = File(...),width=None,height=None):
     zip_buffer = None
     try:
         file_bytes = uploaded_file_artifact.file.read()
@@ -26,7 +26,7 @@ def extract_images_from_pdf(uploaded_file_artifact:File,width=None,height=None):
                     image_bytes = base_image["image"]
                     image_ext = base_image["ext"]
                     # Convert image bytes to a PIL Image object
-                    image = Image.open(io.BytesIO(image_bytes))
+                    image:Image.Image = Image.open(io.BytesIO(image_bytes))
 
                     if width is not None or height is not None:
                         #Resize the image to the desired width and height
