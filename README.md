@@ -32,5 +32,11 @@ It features one endpoint, /extract_image, which accepts a file. The service dete
 2. Make the changes
 3. Create a PR and make sure pipeline passes
 
+## Future Implementations
+
+1. Develop a ruke based engine to customize rules for image extraction
+   (Eg: Omit pages 5-10 , Dont extract image of certain size , avoid b/w image colors ..etc in a yaml or json)
+2. Docx, pptx , epub are the next set of files to be processed
+3. Deployment stage to deploy app in AWS
 
 
