@@ -36,3 +36,7 @@ jobs:
         run: |
           docker run --rm image-extraction-service:${{ github.sha }} pytest --cov=/app/src --cov-report=xml:/app/coverage.xml /app/src/tests
 
+      # Docker image vulnerability scan
+      - name: Docker Image Vulnerability Scan
+        run: |
+          docker run --rm aquasec/trivy image --severity HIGH,CRITICAL image-extraction-service:${{ github.sha }}
